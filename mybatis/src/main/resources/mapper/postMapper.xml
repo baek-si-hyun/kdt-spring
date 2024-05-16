@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.mybatis.mapper.PostMapper">
+    <insert id="insert">
+        INSERT INTO tbl_post(post_title, post_content, member_id)
+        VALUES (#{postTitle}, #{postContent}, #{memberId})
+    </insert>
+    <select id="selectAll" resultType="postVO">
+        SELECT id, post_title, post_content, member_id
+        FROM tbl_post
+    </select>
+    <select id="select" resultType="postDTO">
+        SELECT p.id, post_title, post_content, member_id, member_name
+        FROM tbl_member m
+                 JOIN tbl_post p ON m.id = p.member_id AND p.id = #{id}
+    </select>
+    <update id="update">
+        UPDATE tbl_post
+        SET post_title   = #{postTitle},
+            post_content = #{postContent}
+        WHERE id = ${id}
+    </update>
+    <delete id="delete">
+        delete
+        from tbl_post
+        where id = #{id}
+    </delete>
+</mapper>
